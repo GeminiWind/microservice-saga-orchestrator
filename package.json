@@ -2,33 +2,22 @@
   "name": "nodejs-orchestrator-saga-example",
   "version": "1.0.0",
   "private": true,
+  "workspaces": [
+    "libs/common",
+    "services/*"
+  ],
   "scripts": {
     "dev": "concurrently -n order,shipping,payment -c yellow,cyan,green \"npm run dev:order\" \"npm run dev:shipping\" \"npm run dev:payment\"",
-    "dev:orchestrator": "ts-node -r tsconfig-paths/register services/orchestrator/src/main.ts",
-    "dev:order": "ts-node -r tsconfig-paths/register services/order-service/src/main.ts",
-    "dev:shipping": "ts-node -r tsconfig-paths/register services/shipping-service/src/main.ts",
-    "dev:payment": "ts-node -r tsconfig-paths/register services/payment-service/src/main.ts",
+    "dev:orchestrator": "npm run dev --workspace @app/orchestrator",
+    "dev:order": "npm run dev --workspace @app/order-service",
+    "dev:shipping": "npm run dev --workspace @app/shipping-service",
+    "dev:payment": "npm run dev --workspace @app/payment-service",
     "test": "vitest run",
     "test:unit": "vitest run --exclude tests/integration/**/*.test.ts",
     "test:integration": "RUN_INTEGRATION=1 vitest run tests/integration/**/*.test.ts"
   },
-  "dependencies": {
-    "amqplib": "^0.10.5",
-    "dotenv": "^16.4.7",
-    "express": "^4.21.2",
-    "pg": "^8.13.1",
-    "uuid": "^11.0.5",
-    "zod": "^3.24.1"
-  },
   "devDependencies": {
-    "@types/amqplib": "^0.10.6",
-    "@types/express": "^4.17.21",
-    "@types/node": "^22.10.2",
-    "@types/pg": "^8.11.10",
     "concurrently": "^9.1.2",
-    "ts-node": "^10.9.2",
-    "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.7.2",
     "vitest": "^2.1.8"
   }
 }

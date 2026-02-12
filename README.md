@@ -27,6 +27,13 @@ npm install
 docker compose up --build
 ```
 
+## Workspace Dependency Model
+- This repo uses npm workspaces:
+  - `libs/common` is the shared internal library package: `@app/common`
+  - each service has its own `package.json` under `services/*`
+- Root `npm install` / `npm ci` installs and links all workspaces.
+- Docker images install dependencies per service workspace with `npm ci --workspace ...`.
+
 ## Endpoints
 - `POST http://localhost:3001/orders`
 - `GET http://localhost:3000/sagas/:sagaId`

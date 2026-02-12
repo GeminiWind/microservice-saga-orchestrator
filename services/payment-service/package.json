@@ -1,0 +1,24 @@
+{
+  "name": "@app/payment-service",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "ts-node -r tsconfig-paths/register -P tsconfig.json src/main.ts",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@app/common": "1.0.0",
+    "amqplib": "^0.10.5",
+    "dotenv": "^16.4.7",
+    "pg": "^8.13.1",
+    "uuid": "^11.0.5"
+  },
+  "devDependencies": {
+    "@types/amqplib": "^0.10.6",
+    "@types/node": "^22.10.2",
+    "@types/pg": "^8.11.10",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.7.2"
+  }
+}
