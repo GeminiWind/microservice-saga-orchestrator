@@ -14,7 +14,7 @@
     "dev:payment": "npm run dev --workspace @app/payment-service",
     "test": "vitest run",
     "test:unit": "vitest run --exclude tests/integration/**/*.test.ts",
-    "test:integration": "RUN_INTEGRATION=1 vitest run tests/integration/**/*.test.ts"
+    "test:integration": "RUN_INTEGRATION=1 vitest run tests/integration"
   },
   "devDependencies": {
     "concurrently": "^9.1.2",
