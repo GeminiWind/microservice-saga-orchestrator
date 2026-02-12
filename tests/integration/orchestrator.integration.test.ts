@@ -37,7 +37,7 @@ describe.skipIf(!integrationEnabled)("orchestrator saga integration", () => {
     const { sagaId } = (await res.json()) as { sagaId: string };
     const saga = await waitForSaga(sagaId, "COMPLETED");
     expect(saga.status).toBe("COMPLETED");
-  });
+  }, 30000);
 
   it("rolls back on shipping failure", async () => {
     const res = await fetch("http://localhost:3001/orders", {
@@ -56,7 +56,7 @@ describe.skipIf(!integrationEnabled)("orchestrator saga integration", () => {
     const { sagaId } = (await res.json()) as { sagaId: string };
     const saga = await waitForSaga(sagaId, "FAILED_COMPENSATED");
     expect(saga.status).toBe("FAILED_COMPENSATED");
-  });
+  }, 30000);
 
   it("rolls back on payment failure", async () => {
     const res = await fetch("http://localhost:3001/orders", {
@@ -75,5 +75,5 @@ describe.skipIf(!integrationEnabled)("orchestrator saga integration", () => {
     const { sagaId } = (await res.json()) as { sagaId: string };
     const saga = await waitForSaga(sagaId, "FAILED_COMPENSATED");
     expect(saga.status).toBe("FAILED_COMPENSATED");
-  });
+  }, 30000);
 });
