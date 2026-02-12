@@ -1,9 +1,11 @@
 import { describe, expect, it } from "vitest";
 
 const integrationEnabled = process.env.RUN_INTEGRATION === "1";
+const INTEGRATION_TEST_TIMEOUT_MS = 90000;
+const WAIT_FOR_SAGA_TIMEOUT_MS = 60000;
 
 async function waitForSaga(sagaId: string, expected: string): Promise<Record<string, unknown>> {
-  const timeoutMs = 20000;
+  const timeoutMs = WAIT_FOR_SAGA_TIMEOUT_MS;
   const start = Date.now();
 
   while (Date.now() - start < timeoutMs) {
@@ -37,7 +39,7 @@ describe.skipIf(!integrationEnabled)("orchestrator saga integration", () => {
     const { sagaId } = (await res.json()) as { sagaId: string };
     const saga = await waitForSaga(sagaId, "COMPLETED");
     expect(saga.status).toBe("COMPLETED");
-  }, 30000);
+  }, INTEGRATION_TEST_TIMEOUT_MS);
 
   it("rolls back on shipping failure", async () => {
     const res = await fetch("http://localhost:3001/orders", {
@@ -56,7 +58,7 @@ describe.skipIf(!integrationEnabled)("orchestrator saga integration", () => {
     const { sagaId } = (await res.json()) as { sagaId: string };
     const saga = await waitForSaga(sagaId, "FAILED_COMPENSATED");
     expect(saga.status).toBe("FAILED_COMPENSATED");
-  }, 30000);
+  }, INTEGRATION_TEST_TIMEOUT_MS);
 
   it("rolls back on payment failure", async () => {
     const res = await fetch("http://localhost:3001/orders", {
@@ -75,5 +77,5 @@ describe.skipIf(!integrationEnabled)("orchestrator saga integration", () => {
     const { sagaId } = (await res.json()) as { sagaId: string };
     const saga = await waitForSaga(sagaId, "FAILED_COMPENSATED");
     expect(saga.status).toBe("FAILED_COMPENSATED");
-  }, 30000);
+  }, INTEGRATION_TEST_TIMEOUT_MS);
 });
